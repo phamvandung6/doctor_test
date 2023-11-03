@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "905253298603",
+    "project_id": "doctor-test-5ddc4",
+    "storage_bucket": "doctor-test-5ddc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905253298603:android:955786ed24f896073072ee",
+        "android_client_info": {
+          "package_name": "com.example.doctor_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfUDDHaskFfoxVIDWb0WRfLilYSjWDSpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
