@@ -3,12 +3,21 @@ part of 'room_bloc.dart';
 class RoomState extends Equatable {
   //Danh sách tất cả các phòng
   final List<Room> allRooms;
-  //Danh sách phòng đã xóa 
+  //Danh sách phòng đã xóa
   final List<Room> removedRooms;
   const RoomState({
     this.allRooms = const <Room>[],
     this.removedRooms = const <Room>[],
   });
+  RoomState copyWith({
+    List<Room>? allRooms,
+    List<Room>? removedRooms,
+  }) {
+    return RoomState(
+      allRooms: allRooms ?? this.allRooms,
+      removedRooms: removedRooms ?? this.removedRooms,
+    );
+  }
 
   @override
   List<Object> get props => [allRooms, removedRooms];

@@ -9,9 +9,20 @@ class FirestoreRepository {
     try {
       await FirebaseFirestore.instance
           .collection('rooms')
-          .doc(room!.id)
+          .doc(room!.roomId)
           .set(room.toMap());
       // .add(room!.toMap());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<Room> getRoom({String? id}) async {
+    try {
+      final data =
+          await FirebaseFirestore.instance.collection('rooms').doc(id).get();
+      print(data.data()!);
+      return Room.fromMap(data.data()!);
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -21,10 +32,15 @@ class FirestoreRepository {
   static Future<List<Room>> getRooms() async {
     List<Room> roomList = [];
     try {
-      final data = await FirebaseFirestore.instance.collection('rooms').get();
+      final data = await FirebaseFirestore.instance
+          .collection('rooms')
+          .snapshots()
+          .first;
+      print(data);
 
-      for (var room in data.docs) {
-        roomList.add(Room.fromMap(room.data()));
+      for (var element in data.docs) {
+        print(element.data());
+        roomList.add(Room.fromMap(element.data()));
       }
       return roomList;
     } catch (e) {
@@ -34,23 +50,14 @@ class FirestoreRepository {
 
   //update room
   static Future<void> updateRoom({Room? room}) async {
-    try {
-      final data =
-          FirebaseFirestore.instance.collection(GetStorage().read('rooms'));
-
-      data.doc(room!.id).update(room.toMap());
-    } catch (e) {
+    try {} catch (e) {
       throw Exception(e.toString());
     }
   }
 
   //delete room
   static Future<void> deleteRoom({Room? room}) async {
-    try {
-      final data = FirebaseFirestore.instance.collection('rooms');
-
-      data.doc(room!.id).delete();
-    } catch (e) {
+    try {} catch (e) {
       throw Exception(e.toString());
     }
   }
@@ -69,19 +76,22 @@ class FirestoreRepository {
   }
 
   //get all patients
-  static Future<List<Patient>> getPatients() async {
+  static Future<List<Patient>> getPatients(Room? room) async {
     List<Patient> patientsList = [];
     try {
       final data = await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(room!.roomId)
           .collection('patients')
-          // .orderBy('timestamp')
-          .get();
+          .snapshots()
+          .first;
 
       for (var patient in data.docs) {
         patientsList.add(Patient.fromMap(patient.data()));
       }
       return patientsList;
     } catch (e) {
+      print(e.toString());
       throw Exception(e.toString());
     }
   }

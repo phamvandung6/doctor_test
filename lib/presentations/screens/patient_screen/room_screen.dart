@@ -18,7 +18,11 @@ class _RoomScreenState extends State<RoomScreen> {
     return BlocBuilder<RoomBloc, RoomState>(
       builder: (context, state) {
         final roomBloc = context.read<RoomBloc>();
-        roomBloc.add(GetAllRooms());
+        try {
+          roomBloc.add(GetAllRooms());
+        } catch (e) {
+          print(e.toString());
+        }
         return Scaffold(
           appBar: AppBar(
             title: const Text('Danh sách phòng bệnh'),
@@ -41,7 +45,9 @@ class _RoomScreenState extends State<RoomScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 child: TextField(
-                  // onChanged: (value) => _runFilter(value),
+                  onChanged: (value) {
+                    roomBloc.add(SearchRoom(search: value));
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -89,9 +95,9 @@ class _RoomScreenState extends State<RoomScreen> {
                                         context
                                             .read<RoomBloc>()
                                             .add(DeleteRoom(room: room));
-                                        context
-                                            .read<RoomBloc>()
-                                            .add(GetAllRooms());
+                                        // context
+                                        //     .read<RoomBloc>()
+                                        //     .add(GetAllRooms());
                                         Navigator.pop(context);
                                       },
                                       child: const Text('Xóa'),

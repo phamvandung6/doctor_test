@@ -1,6 +1,6 @@
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:doctor_test/models/room_model.dart';
-import 'package:doctor_test/presentations/screens/patient_screen/create_patient_screen.dart';
+import 'package:doctor_test/presentations/screens/patient_screen/adding_data.dart';
 import 'package:flutter/material.dart';
 
 class PatientScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class PatientScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreatePatientScreen(room: room)),
+                        builder: (context) => WizardForm(room: room)),
                   );
                 },
                 icon: const Icon(Icons.add),
@@ -41,8 +41,8 @@ class PatientScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     side: const BorderSide(width: 1),
                   ),
-                  title: Text('Tên bệnh nhân: ${patient.patientName}'),
-                  subtitle: Text('Id bệnh nhân: ${patient.patientId}'),
+                  title: Text('Tên bệnh nhân: ${patient.name}'),
+                  subtitle: Text('Id bệnh nhân: ${patient.id}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () {
@@ -52,7 +52,7 @@ class PatientScreen extends StatelessWidget {
                           return AlertDialog(
                             title: const Text('Xác nhận xóa'),
                             content: Text(
-                                'Bạn có chắc chắn muốn xóa bệnh nhân ${patient.patientName} không?'),
+                                'Bạn có chắc chắn muốn xóa bệnh nhân ${patient.name} không?'),
                             actions: [
                               TextButton(
                                 onPressed: () {

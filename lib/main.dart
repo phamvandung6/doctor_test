@@ -1,24 +1,21 @@
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:doctor_test/presentations/routes/generated_route.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyDfUDDHaskFfoxVIDWb0WRfLilYSjWDSpI',
-      appId: '1:905253298603:android:955786ed24f896073072ee',
-      messagingSenderId: '905253298603',
-      projectId: 'doctor-test-5ddc4',
-    ),
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getApplicationDocumentsDirectory());
+  // HydratedBloc.storage = await HydratedStorage.build(
+  //     storageDirectory: await getApplicationDocumentsDirectory());
 
   runApp(const MyApp());
 }

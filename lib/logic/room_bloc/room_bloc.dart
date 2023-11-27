@@ -16,6 +16,14 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     on<RestoreRoom>(_onRestoreRoom);
   }
 
+  void _onSearchRoom(SearchRoom event, Emitter<RoomState> emit) async {
+    List<Room> allRooms = [];
+    await FirestoreRepository.getRoom(id: event.search).then((value) {
+      allRooms.add(value);
+    });
+    emit(state.copyWith(allRooms: allRooms));
+  }
+
   void _onAddRoom(AddRoom event, Emitter<RoomState> emit) async {
     await FirestoreRepository.createRoom(room: event.room);
   }
@@ -23,7 +31,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
   void _onGetAllRooms(GetAllRooms event, Emitter<RoomState> emit) async {
     List<Room> allRooms = [];
     List<Room> removedRooms = [];
-
     await FirestoreRepository.getRooms().then((value) {
       for (var room in value) {
         allRooms.add(room);
@@ -32,7 +39,6 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
     emit(RoomState(
       allRooms: allRooms,
-      removedRooms: removedRooms,
     ));
   }
 

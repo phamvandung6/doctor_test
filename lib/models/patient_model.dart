@@ -1,52 +1,90 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class Patient extends Equatable {
-  final String patientId;
-  final String patientName;
-  final String patientRoom;
-  
-  //id on firebase
-  final String id;
-
+  final String? name;
+  final String? id;
+  final double? height;
+  final double? weight;
+  final String? address;
+  final String? phone;
+  final String? gender;
+  final Timestamp? birthday;
+  // final String? room;
   const Patient({
-    required this.patientId,
-    required this.patientName,
-    required this.patientRoom,
-    required this.id,
+    this.name = '',
+    this.id = '',
+    this.height = 0.0,
+    this.weight = 0.0,
+    this.address = '',
+    this.phone = '',
+    this.gender = '',
+    this.birthday,
+    // this.room = '',
   });
 
   Patient copyWith({
-    String? patientId,
-    String? patientName,
-    String? patientRoom,
+    String? name,
     String? id,
+    double? height,
+    double? weight,
+    String? address,
+    String? phone,
+    String? gender,
+    Timestamp? birthday,
+    // String? room,
   }) {
     return Patient(
-      patientId: patientId ?? this.patientId,
-      patientName: patientName ?? this.patientName,
-      patientRoom: patientRoom ?? this.patientRoom,
+      name: name ?? this.name,
       id: id ?? this.id,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      address: address ?? this.address,
+      phone: phone ?? this.phone,
+      gender: gender ?? this.gender,
+      birthday: birthday ?? this.birthday,
+      // room: room ?? this.room,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'patientId': patientId,
-      'patientName': patientName,
-      'patientRoom': patientRoom,
+      'name': name,
       'id': id,
+      'height': height,
+      'weight': weight,
+      'address': address,
+      'phone': phone,
+      'gender': gender,
+      'birthday': birthday,
+      // 'room': room,
     };
   }
 
   factory Patient.fromMap(Map<String, dynamic> map) {
     return Patient(
-      patientId: map['patientId'] as String,
-      patientName: map['patientName'] as String,
-      patientRoom: map['patientRoom'] as String,
-      id: map['id'] as String,
+      id: map['id'] as String?,
+      name: map['name'] as String?,
+      height: map['height'] as double?,
+      weight: map['weight'] as double?,
+      address: map['address'] as String?,
+      phone: map['phone'] as String?,
+      birthday: map['birthday'] as Timestamp?,
+      gender: map['gender'] as String?,
+      // room: map['room'] as String,
+      // fbId: map['fbId'] as String,
     );
   }
 
   @override
-  List<Object> get props => [patientId, patientName, patientRoom];
+  // TODO: implement props
+  List<Object?> get props => [
+        id,
+        name,
+        height,
+        weight,
+        address,
+        phone,
+        birthday,
+      ];
 }

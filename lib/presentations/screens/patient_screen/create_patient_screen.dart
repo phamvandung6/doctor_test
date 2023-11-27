@@ -1,3 +1,4 @@
+import 'package:doctor_test/logic/create_patient_form_bloc/wizard_creation_bloc.dart';
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:doctor_test/models/patient_model.dart';
 import 'package:doctor_test/models/room_model.dart';
@@ -12,19 +13,25 @@ class CreatePatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CreatePatientFormBloc(),
+      create: (context) => WizardFormBloc(room: room.roomId),
       child: Builder(
         builder: (context) {
-          final formBloc = BlocProvider.of<CreatePatientFormBloc>(context);
+          final formBloc = BlocProvider.of<WizardFormBloc>(context);
           return Scaffold(
             appBar: AppBar(title: const Text('Tạo bệnh nhân mới')),
             body: FormBlocListener<CreatePatientFormBloc, String, String>(
               onSubmitting: (context, state) {
                 var patient = Patient(
-                  patientId: formBloc.patientId.value,
-                  patientName: formBloc.patientName.value,
-                  id: GUIDGen.generate(),
-                  patientRoom: room.roomId,
+                  id: formBloc.id.value,
+                  name: formBloc.name.value,
+                  height: double.parse(formBloc.height.value),
+                  weight: double.parse(formBloc.weight.value),
+                  address: formBloc.address.value,
+                  phone: formBloc.phoneNumber.value,
+                  gender: formBloc.gender.value,
+                  // birthday: formBloc.birthDate.value,
+                  // fbId: GUIDGen.generate(),
+                  // room: room.roomId,
                 );
                 context.read<PatientBloc>().add(AddPatient(patient: patient));
                 context.read<PatientBloc>().add(GetAllPatients(room: room));
@@ -44,7 +51,7 @@ class CreatePatientScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFieldBlocBuilder(
-                      textFieldBloc: formBloc.patientName,
+                      textFieldBloc: formBloc.name,
                       decoration: InputDecoration(
                         labelText: 'Nhập tên bệnh nhân',
                         border: OutlineInputBorder(
@@ -54,7 +61,7 @@ class CreatePatientScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     TextFieldBlocBuilder(
-                      textFieldBloc: formBloc.patientId,
+                      textFieldBloc: formBloc.id,
                       decoration: InputDecoration(
                         labelText: 'Nhập id bệnh nhân',
                         border: OutlineInputBorder(

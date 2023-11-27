@@ -21,7 +21,7 @@ class CreateRoomScreen extends StatelessWidget {
                 var room = Room(
                   roomId: formBloc.roomId.value,
                   roomName: formBloc.roomName.value,
-                  id: GUIDGen.generate(),
+                  // id: GUIDGen.generate(),
                 );
                 context.read<RoomBloc>().add(AddRoom(room: room));
                 context.read<RoomBloc>().add(GetAllRooms());

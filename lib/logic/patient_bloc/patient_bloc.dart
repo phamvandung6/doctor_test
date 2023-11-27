@@ -24,11 +24,9 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
       GetAllPatients event, Emitter<PatientState> emit) async {
     List<Patient> allPatients = [];
 
-    await FirestoreRepository.getPatients().then((value) {
+    await FirestoreRepository.getPatients(event.room).then((value) {
       for (var patient in value) {
-        if (patient.patientRoom == event.room.roomId) {
-          allPatients.add(patient);
-        }
+        allPatients.add(patient);
       }
     });
 
