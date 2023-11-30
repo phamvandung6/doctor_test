@@ -3,7 +3,10 @@ import 'package:doctor_test/presentations/screens/auth_screen/forgot_password_sc
 import 'package:doctor_test/presentations/screens/auth_screen/register_screen.dart';
 import 'package:doctor_test/presentations/screens/landing_page.dart';
 import 'package:doctor_test/utils/loading_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,7 +23,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  var auth = FirebaseAuth.instance;
   bool rememberUser = false;
+  checkIsLogin() async {
+    auth.authStateChanges().listen((User? user) {
+      if (user != null && mounted) {
+        setState(() {
+          rememberUser = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,18 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-  // Widget _buildTop() {
-  //   return SizedBox(
-  //     width: mediaSize.width,
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.center,
-  //       children: [
-  //         Image.asset('assets/images/logo.png', width: 100, height: 100),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _buildBottom() {
     return SizedBox(
@@ -159,10 +161,11 @@ class _LoginScreenState extends State<LoginScreen> {
               TextButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterScreen(),
-                      ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegisterScreen(),
+                    ),
+                  );
                 },
                 child: const Text('Đăng kí'),
               )

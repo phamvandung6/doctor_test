@@ -1,5 +1,6 @@
 import 'package:doctor_test/data/data_provider/patient_provider.dart';
 import 'package:doctor_test/data/models/model_export.dart';
+import 'package:doctor_test/presentations/screens/patient_screen/patient_home_page/patient_home_page.dart';
 import 'package:doctor_test/utils/popup_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,17 @@ class PatientTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(23),
-      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PatientHomePage(room: room, patient: patient),
+          ),
+        );
+      },
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.circular(23),
+      // ),
       tileColor: const Color(0xffFAF6F0),
       leading: CircleAvatar(
         backgroundColor: const Color(0xff9EB8D9),

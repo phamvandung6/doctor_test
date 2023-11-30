@@ -15,15 +15,17 @@ class CreateRoomScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(title: const Text('Tạo phòng mới')),
             body: FormBlocListener<CreateRoomFormBloc, String, String>(
-              onSubmitting: (context, state) {
+              onSubmitting: (context, state) async {
                 LoadingDialog.show(context);
               },
               onSuccess: (context, state) {
+                // LoadingDialog.show(context);
+
                 LoadingDialog.hide(context);
                 Navigator.pop(context);
               },
               onFailure: (context, state) {
-                LoadingDialog.hide(context);
+                // LoadingDialog.hide(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.failureResponse.toString())));
               },

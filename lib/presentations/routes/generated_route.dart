@@ -1,5 +1,4 @@
 import 'package:doctor_test/presentations/screens/auth_screen/login_screen.dart';
-import 'package:doctor_test/presentations/screens/landing_page.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {

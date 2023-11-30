@@ -58,7 +58,7 @@ class _RoomScreenState extends State<RoomScreen> {
         itemBuilder: (context, index) {
           final room = rooms[index];
           return Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 4),
             child: RoomTile(room: room),
           );
         },

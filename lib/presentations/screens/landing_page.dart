@@ -1,9 +1,7 @@
-import 'package:doctor_test/data/models/room_model.dart';
 import 'package:doctor_test/logic/landing_page_bloc/landing_page_bloc.dart';
 import 'package:doctor_test/presentations/screens/doctor_screen/doctor_screen.dart';
 import 'package:doctor_test/presentations/screens/home_screen/home_screen.dart';
-import 'package:doctor_test/presentations/screens/patient_screen/create_room_screen.dart';
-import 'package:doctor_test/presentations/screens/patient_screen/patient_screen.dart';
+import 'package:doctor_test/presentations/screens/patient_screen/patient_home_page/patient_home_page.dart';
 import 'package:doctor_test/presentations/screens/patient_screen/room_screen.dart';
 import 'package:doctor_test/presentations/screens/setting_screen/setting_screen.dart';
 import 'package:flutter/material.dart';

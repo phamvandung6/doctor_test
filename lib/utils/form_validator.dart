@@ -1,9 +1,6 @@
-import 'dart:async';
+import 'package:doctor_test/logic/export_bloc.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_form_bloc/flutter_form_bloc.dart';
-
-class PatientValidators {
+class FormValidatorUtils {
   static String? required(dynamic value) {
     if (value == null ||
         value == false ||
@@ -19,21 +16,6 @@ class PatientValidators {
       return 'Đây không phải là định dạng của một email';
     }
     return null;
-  }
-
-  static Future<bool> isExistId(String roomId, String id) async {
-    try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('rooms')
-          .doc(roomId)
-          .collection('patients')
-          .where('id', isEqualTo: id)
-          .get();
-
-      return querySnapshot.docs.isNotEmpty;
-    } catch (e) {
-      throw Exception(e.toString());
-    }
   }
 }
 

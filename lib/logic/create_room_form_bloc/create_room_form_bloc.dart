@@ -5,7 +5,7 @@ import 'package:flutter_form_bloc/flutter_form_bloc.dart';
 
 class CreateRoomFormBloc extends FormBloc<String, String> {
   final roomName = TextFieldBloc(validators: [
-    FieldBlocValidators.required,
+    RoomValidators.required,
   ]);
   final roomId = TextFieldBloc(validators: [
     RoomValidators.required,
@@ -32,13 +32,10 @@ class CreateRoomFormBloc extends FormBloc<String, String> {
   //   };
   // }
 
-
- // có bug ở đây. Khi mình không điền gì vào mà ấn tạo phòng thì nó xứ xoay vòng vòng mãi
+  // có bug ở đây. Khi mình không điền gì vào mà ấn tạo phòng thì nó xứ xoay vòng vòng mãi
   @override
   void onSubmitting() async {
     final id = roomId.value;
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-
     try {
       final isIdExist = await RoomValidators.isExistId(id);
       if (isIdExist) {
@@ -49,8 +46,8 @@ class CreateRoomFormBloc extends FormBloc<String, String> {
           roomId: roomId.value,
           roomName: roomName.value,
         ));
-        emitSuccess();
       }
+      emitSuccess();
     } catch (e) {
       emitFailure(failureResponse: 'Có lỗi đã xảy ra');
     }

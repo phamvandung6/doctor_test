@@ -23,10 +23,10 @@ class RoomTile extends StatelessWidget {
           ),
         );
       },
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusDirectional.circular(23),
-      ),
-      tileColor: const Color(0xffEAEAEA),
+      // shape: RoundedRectangleBorder(
+      //   borderRadius: BorderRadiusDirectional.circular(23),
+      // ),
+      tileColor: const Color.fromARGB(255, 255, 255, 255),
       leading: CircleAvatar(
         backgroundColor: const Color(0xffA6E3E9),
         child: Text(room.roomName),

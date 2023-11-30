@@ -1,6 +1,4 @@
-import 'package:doctor_test/data/data_provider/patient_provider.dart';
 import 'package:doctor_test/logic/export_bloc.dart';
-import 'package:doctor_test/data/models/patient_model.dart';
 import 'package:doctor_test/data/models/room_model.dart';
 import 'package:doctor_test/utils/loading_dialog.dart';
 import 'package:flutter/material.dart';
@@ -12,28 +10,14 @@ class CreatePatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CreatePatientFormBloc(),
+      create: (context) => CreatePatientFormBloc(room: room),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<CreatePatientFormBloc>(context);
           return Scaffold(
             appBar: AppBar(title: const Text('Tạo bệnh nhân mới')),
             body: FormBlocListener<CreatePatientFormBloc, String, String>(
-              onSubmitting: (context, state) {
-                var patient = Patient(
-                  id: formBloc.id.value,
-                  name: formBloc.name.value,
-                  weight: formBloc.weight.valueToDouble!,
-                  height: formBloc.weight.valueToDouble!,
-                  birthday: formBloc.birthday.value,
-                  address: formBloc.address.value,
-                  phone: formBloc.phone.value,
-                  gender: formBloc.gender.value,
-                );
-                PatientProvider.createPatient(
-                  roomId: room.roomId,
-                  patient: patient,
-                );
+              onSubmitting: (context, state) async {
                 LoadingDialog.show(context);
               },
               onSuccess: (context, state) {
@@ -41,7 +25,7 @@ class CreatePatientScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
               onFailure: (context, state) {
-                LoadingDialog.hide(context);
+                // LoadingDialog.hide(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.failureResponse.toString())));
               },

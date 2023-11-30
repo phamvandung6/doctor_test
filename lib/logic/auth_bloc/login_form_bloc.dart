@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_bloc/flutter_form_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginFormBloc extends FormBloc<String, String> {
   final email = TextFieldBloc(
@@ -13,9 +14,6 @@ class LoginFormBloc extends FormBloc<String, String> {
     validators: [
       FieldBlocValidators.required,
     ],
-  );
-  final confirmPassword = TextFieldBloc(
-    validators: [FieldBlocValidators.required],
   );
 
   LoginFormBloc() {
