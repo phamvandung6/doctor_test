@@ -26,7 +26,8 @@ class _PatientScreenState extends State<PatientScreen> {
             return const Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
-              return const Center(child: Text('Đã có lỗi xảy ra :>'));
+              return const Center(
+                  child: Text('Đã có lỗi xảy ra :> ai đó hãy cíu tôi đi'));
             } else {
               return Scaffold(
                 appBar: AppBar(

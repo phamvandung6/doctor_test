@@ -1,7 +1,4 @@
 import 'package:doctor_test/presentations/screens/patient_screen/patient_home_page/list_regimen_screen/create_regimen.dart';
-import 'package:doctor_test/utils/enums/enum_to_enum.dart';
-import 'package:doctor_test/utils/enums/enum_to_name.dart';
-import 'package:doctor_test/utils/enums/enum_to_string.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../data/models/model_export.dart';
@@ -30,9 +27,6 @@ class ListRegimen extends StatelessWidget {
                   }));
                 },
                 child: const Text("Tạo phác đồ mới")),
-            Text(EnumToString.enumToString(patient.procedureType)),
-            Text(patient.name),
-            Text(patient.currentProcedureId),
           ],
         ),
       ),

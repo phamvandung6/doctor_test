@@ -20,20 +20,18 @@ class CreateRegimenFormBloc extends FormBloc<String, String> {
 
   @override
   FutureOr<void> onSubmitting() {
-    var patient = Patient(
-      id: _patient.id,
-      name: _patient.name,
-      weight: _patient.weight,
-      height: _patient.height,
-      birthday: _patient.birthday,
-      address: _patient.address,
-      phone: _patient.phone,
-      gender: _patient.gender,
-      procedureType: StringToEnum.stringToProcedureType(regimen.value!),
-      currentProcedureId: DateTime.now().toString(),
-    );
+    //   var patient = Patient(
+    //     id: _patient.id,
+    //     name: _patient.name,
+    //     weight: _patient.weight,
+    //     height: _patient.height,
+    //     birthday: _patient.birthday,
+    //     address: _patient.address,
+    //     phone: _patient.phone,
+    //     gender: _patient.gender,
+    //   );
 
-    PatientProvider.updatePatient(room: _room, patient: patient);
+    // PatientProvider.updatePatient(room: _room, patient: patient);
     emitSuccess(canSubmitAgain: true);
   }
 }

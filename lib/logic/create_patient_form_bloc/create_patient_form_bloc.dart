@@ -33,8 +33,6 @@ class CreatePatientFormBloc extends FormBloc<String, String> {
   }
   final Room _room;
 
-  //vì để tạo bệnh bắt buộc phải có roomId nên em không xử lí logic tạo bệnh nhân
-  // ở đây mà xử lí ở create_patient_screen
   @override
   void onSubmitting() async {
     try {
@@ -42,7 +40,7 @@ class CreatePatientFormBloc extends FormBloc<String, String> {
         id: id.value,
         name: name.value,
         weight: weight.valueToDouble!,
-        height: weight.valueToDouble!,
+        height: height.valueToDouble!,
         birthday: birthday.value,
         address: address.value,
         phone: phone.value,
