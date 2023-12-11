@@ -6,11 +6,11 @@ import 'package:doctor_test/utils/utils.dart';
 
 class RoomProvider {
   //tao phong moi
-  static Future<void> createRoom(Room? room) async {
+  static Future<void> createRoom({required Room room}) async {
     try {
       await FirebaseFirestore.instance
           .collection('rooms')
-          .doc(room!.roomId)
+          .doc(room.roomId)
           .set(room.toMap());
     } catch (e) {
       throw Exception(e.toString());

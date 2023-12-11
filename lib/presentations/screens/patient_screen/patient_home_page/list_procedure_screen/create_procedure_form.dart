@@ -1,12 +1,13 @@
 import 'package:doctor_test/logic/export_bloc.dart';
-import 'package:doctor_test/presentations/screens/patient_screen/patient_home_page/list_regimen_screen/form_bloc/create_regimen_form_bloc.dart';
+import 'package:doctor_test/presentations/screens/patient_screen/patient_home_page/list_procedure_screen/form_bloc/create_procedure_form_bloc.dart';
 import 'package:doctor_test/utils/loading_dialog.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../data/models/model_export.dart';
 
-class CreateRegimenForm extends StatelessWidget {
-  const CreateRegimenForm({super.key, required this.room, required this.patient});
+class CreateProcedureForm extends StatelessWidget {
+  const CreateProcedureForm(
+      {super.key, required this.room, required this.patient});
 
   final Room room;
   final Patient patient;
@@ -14,12 +15,13 @@ class CreateRegimenForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CreateRegimenFormBloc(room: room, patient: patient),
+      create: (context) =>
+          CreateProcedureFormBloc(room: room, patient: patient),
       child: Builder(builder: (context) {
-        final formBloc = BlocProvider.of<CreateRegimenFormBloc>(context);
+        final formBloc = BlocProvider.of<CreateProcedureFormBloc>(context);
         return Scaffold(
           appBar: AppBar(title: const Text('Tạo phòng mới')),
-          body: FormBlocListener<CreateRegimenFormBloc, String, String>(
+          body: FormBlocListener<CreateProcedureFormBloc, String, String>(
             onSubmitting: (context, state) async {
               LoadingDialog.show(context);
             },
@@ -44,9 +46,11 @@ class CreateRegimenForm extends StatelessWidget {
                       child: Text(value),
                     ),
                   ),
-                  ElevatedButton(onPressed: () {
-                    formBloc.submit();
-                  }, child: const Text('Tạo')),
+                  ElevatedButton(
+                      onPressed: () {
+                        formBloc.submit();
+                      },
+                      child: const Text('Tạo')),
                 ],
               ),
             ),

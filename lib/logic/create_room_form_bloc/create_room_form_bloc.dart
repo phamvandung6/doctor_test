@@ -32,7 +32,6 @@ class CreateRoomFormBloc extends FormBloc<String, String> {
   //   };
   // }
 
-  // có bug ở đây. Khi mình không điền gì vào mà ấn tạo phòng thì nó xứ xoay vòng vòng mãi
   @override
   void onSubmitting() async {
     final id = roomId.value;
@@ -42,7 +41,8 @@ class CreateRoomFormBloc extends FormBloc<String, String> {
         roomId.addFieldError('ID phòng này đã tồn tại');
         emitFailure(failureResponse: 'Phòng này đã tồn tại');
       } else {
-        RoomProvider.createRoom(Room(
+        RoomProvider.createRoom(
+            room: Room(
           roomId: roomId.value,
           roomName: roomName.value,
         ));

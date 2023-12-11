@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_test/data/data_provider/patient_provider.dart';
 import 'package:doctor_test/data/models/patient_model.dart';
 import 'package:doctor_test/data/models/room_model.dart';
@@ -43,7 +44,7 @@ class CreatePatientFormBloc extends FormBloc<String, String> {
         name: name.value,
         weight: weight.valueToDouble!,
         height: weight.valueToDouble!,
-        birthday: birthday.value,
+        birthday: Timestamp.fromDate(birthday.value),
         address: address.value,
         phone: phone.value,
         gender: gender.value,

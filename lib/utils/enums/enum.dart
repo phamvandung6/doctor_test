@@ -11,6 +11,17 @@ enum ProcedureType {
   unknown,
 }
 
+enum TPNStatus {
+  firstAsk,
+  treatmening,
+  finish,
+}
+
+enum TPNType {
+  noInsulin,
+  yesInsulin,
+}
+
 enum ProcedureStatus {
   firstAsk,
   noInsulin,

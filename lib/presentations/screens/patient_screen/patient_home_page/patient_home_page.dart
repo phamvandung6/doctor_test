@@ -1,9 +1,9 @@
 import 'package:doctor_test/data/models/model_export.dart';
 import 'package:flutter/material.dart';
 
-import 'list_regimen_screen/list_regimen.dart';
+import 'list_procedure_screen/list_procedure.dart';
 import 'patient_profile/patient_profile.dart';
-import 'treatment/treatment.dart';
+import 'treatment/tpn/tpn_treatment.dart';
 
 class PatientHomePage extends StatefulWidget {
   const PatientHomePage({super.key, required this.patient, required this.room});
@@ -21,30 +21,19 @@ class _HomePageState extends State<PatientHomePage> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Trang chủ bệnh nhân'),
           bottom: TabBar(
-            onTap: (selectedIndex) {},
+            onTap: (index) {},
             tabs: const [
               Tab(
                 child: Text(
-                  'Điều trị',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'Danh sách phác đồ',
+                  'Phác đồ đang điều trị',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -59,8 +48,10 @@ class _HomePageState extends State<PatientHomePage> {
         ),
         body: TabBarView(
           children: [
-            const Treatment(),
-            ListRegimen(room: widget.room, patient: widget.patient),
+            ListProcedure(
+              room: widget.room,
+              patient: widget.patient,
+            ),
             PatientProfile(widget: widget)
           ],
         ),

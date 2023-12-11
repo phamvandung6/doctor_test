@@ -6,3 +6,4 @@ export 'package:doctor_test/logic/auth_bloc/register_form_bloc.dart';
 export 'package:doctor_test/logic/auth_bloc/forgot_password_form_bloc.dart';
 
 export 'package:doctor_test/logic/landing_page_bloc/landing_page_bloc.dart';
+export 'package:doctor_test/logic/regimen_logics/tpn_bloc/tpn_bloc.dart';

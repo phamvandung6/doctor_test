@@ -1,27 +1,38 @@
-import 'package:doctor_test/data/models/medical/medical_procedure.dart';
-import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
 
-class TPNProcedure extends MedicalProcedure {
-  String status;
-  TPNProcedure(
-      {this.status = 'ok',
-      required super.beginTime,
-      required super.state,
-      required super.regimens})
-      : super(name: 'TPNProcedure');
+class Procedure extends Equatable {
+  final String procedureType;
+  final String currentProcedureId;
+  
+  const Procedure({
+    required this.procedureType,
+    required this.currentProcedureId,
+  });
 
   @override
-  String toString() {
-    return '''TPNProcedure: 
-      {beginTime: $beginTime,\n state: $state,\n regimens: $regimens}
-       ''';
+  List<Object> get props => [procedureType, currentProcedureId];
+
+  Procedure copyWith({
+    String? procedureType,
+    String? currentProcedureId,
+  }) {
+    return Procedure(
+      procedureType: procedureType ?? this.procedureType,
+      currentProcedureId: currentProcedureId ?? this.currentProcedureId,
+    );
   }
 
-  static Widget get officialName {
-    return const Text(
-        'Phác đồ cho bệnh nhân ĐTĐ nuôi dưỡng bằng đường tĩnh mạch',
-        //bôi đậm
-        style: TextStyle(fontWeight: FontWeight.bold),
-        textAlign: TextAlign.center);
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'procedureType': procedureType,
+      'currentProcedureId': currentProcedureId,
+    };
+  }
+
+  factory Procedure.fromMap(Map<String, dynamic> map) {
+    return Procedure(
+      procedureType: map['procedureType'] as String,
+      currentProcedureId: map['currentProcedureId'] as String,
+    );
   }
 }

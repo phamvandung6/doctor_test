@@ -1,6 +1,4 @@
-import 'package:doctor_test/utils/enums/enum.dart';
-import 'package:doctor_test/utils/enums/enum_to_enum.dart';
-import 'package:doctor_test/utils/enums/enum_to_string.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
@@ -9,14 +7,12 @@ class Patient extends Equatable {
   final String name;
   final double weight;
   final double height;
-  final DateTime birthday;
+  final Timestamp birthday;
   final String address;
   final String phone;
   final String gender;
-  ProcedureType procedureType;
-  String currentProcedureId;
 
-  Patient({
+  const Patient({
     required this.id,
     required this.name,
     required this.weight,
@@ -25,8 +21,6 @@ class Patient extends Equatable {
     required this.address,
     required this.phone,
     required this.gender,
-    this.procedureType = ProcedureType.unknown,
-    this.currentProcedureId = 'Unknown',
   });
 
   Patient copyWith({
@@ -34,13 +28,10 @@ class Patient extends Equatable {
     String? name,
     double? weight,
     double? height,
-    DateTime? birthday,
+    Timestamp? birthday,
     String? address,
     String? phone,
     String? gender,
-    ProcedureType? procedureType,
-    String? currentProcedureId,
-
   }) {
     return Patient(
       id: id ?? this.id,
@@ -51,8 +42,6 @@ class Patient extends Equatable {
       address: address ?? this.address,
       phone: phone ?? this.phone,
       gender: gender ?? this.gender,
-      procedureType: procedureType ?? this.procedureType,
-      currentProcedureId: currentProcedureId ?? this.currentProcedureId,
     );
   }
 
@@ -62,12 +51,10 @@ class Patient extends Equatable {
       'name': name,
       'weight': weight,
       'height': height,
-      'birthday': birthday.millisecondsSinceEpoch,
+      'birthday': birthday,
       'address': address,
       'phone': phone,
       'gender': gender,
-      'procedureType': EnumToString.enumToString(procedureType),
-      'currentProcedureId': currentProcedureId,
     };
   }
 
@@ -77,12 +64,10 @@ class Patient extends Equatable {
       name: map['name'] as String,
       weight: map['weight'] as double,
       height: map['height'] as double,
-      birthday: DateTime.fromMillisecondsSinceEpoch(map['birthday'] as int),
+      birthday: map['birthday'] as Timestamp,
       address: map['address'] as String,
       phone: map['phone'] as String,
       gender: map['gender'] as String,
-      procedureType: StringToEnum.stringToProcedureType(map['procedureType']),
-      currentProcedureId: map['currentProcedureId'] as String,
     );
   }
 
@@ -100,8 +85,6 @@ class Patient extends Equatable {
       address,
       phone,
       gender,
-      procedureType,
-      currentProcedureId,
     ];
   }
 }

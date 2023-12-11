@@ -32,6 +32,37 @@ class PatientProvider {
       throw Exception(e.toString());
     }
   }
+ 
+ // create procedures
+  static Future<void> createProcedure(
+      {required Room room,
+      required Patient patient,
+      required Procedure procedure}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(room.roomId)
+          .collection('patients')
+          .doc(patient.id)
+          .collection('procedures')
+          .doc(procedure.currentProcedureId.toString())
+          .set(procedure.toMap());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  //Stream lấy ra thủ tục bệnh nhân
+  static Stream<List<Procedure>> getProcedures(
+          {required Room room, required Patient patient}) =>
+      FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(room.roomId)
+          .collection('patients')
+          .doc(patient.id)
+          .collection('procedures')
+          .snapshots()
+          .transform(Utils.transformer(Procedure.fromMap));
 
   // Stream lấy ra tất cả các bệnh nhân
   static Stream<List<Patient>> getPatients({required Room room}) =>
