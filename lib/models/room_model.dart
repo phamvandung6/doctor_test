@@ -1,25 +1,22 @@
 import 'package:equatable/equatable.dart';
 
 class Room extends Equatable {
-  final String roomId;
-  final String roomName;
+  final String? roomId;
+  final String? roomName;
   //id trên firebase chứ không phải là id của phòng
   // final String id;
 
-  bool? isDeleted;
+  final bool? isDeleted;
 
-  Room({
-    required this.roomId,
-    required this.roomName,
+  const Room({
+    this.roomId = '',
+    this.roomName = '',
     // required this.id,
-    this.isDeleted,
-  }) {
-    isDeleted = isDeleted ?? false;
-  }
+    this.isDeleted = false,
+  });
 
   @override
   List<Object?> get props => [roomId, roomName, isDeleted];
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'roomId': roomId,
@@ -37,11 +34,9 @@ class Room extends Equatable {
       isDeleted: map['isDeleted'] as bool?,
     );
   }
-
   Room copyWith({
     String? roomId,
     String? roomName,
-    String? id,
     bool? isDeleted,
   }) {
     return Room(

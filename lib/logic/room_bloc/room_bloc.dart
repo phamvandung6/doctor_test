@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:doctor_test/models/patient_model.dart';
 import 'package:doctor_test/models/room_model.dart';
 import 'package:doctor_test/repositories/firebase_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -14,10 +13,22 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
     on<DeleteRoom>(_onDeleteRoom);
     on<RemoveRoom>(_onRemoveRoom);
     on<RestoreRoom>(_onRestoreRoom);
+    on<SearchRoom>(_onSearchRoom);
+    on<ChooseRoom>(_onChooseRoom);
+  }
+  void _onChooseRoom(ChooseRoom event, Emitter<RoomState> emit) {
+    Room chosenRoom = event.chosenRoom;
+    emit(state.copyWith(chosenRoom: chosenRoom));
+    // print(state.chosenRoom);
   }
 
+  // sau này sẽ cải tiến tìm kiếm ko theo thời gian thực.
   void _onSearchRoom(SearchRoom event, Emitter<RoomState> emit) async {
     List<Room> allRooms = [];
+    if (event.search == '') {
+      emit(state.copyWith(allRooms: []));
+      return;
+    }
     await FirestoreRepository.getRoom(id: event.search).then((value) {
       allRooms.add(value);
     });
@@ -30,16 +41,13 @@ class RoomBloc extends Bloc<RoomEvent, RoomState> {
 
   void _onGetAllRooms(GetAllRooms event, Emitter<RoomState> emit) async {
     List<Room> allRooms = [];
-    List<Room> removedRooms = [];
+    // List<Room> removedRooms = [];
     await FirestoreRepository.getRooms().then((value) {
       for (var room in value) {
         allRooms.add(room);
       }
     });
-
-    emit(RoomState(
-      allRooms: allRooms,
-    ));
+    emit(state.copyWith(allRooms: allRooms));
   }
 
   void _onDeleteRoom(DeleteRoom event, Emitter<RoomState> emit) async {

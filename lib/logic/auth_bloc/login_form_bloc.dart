@@ -29,8 +29,8 @@ class LoginFormBloc extends FormBloc<String, String> {
 
   @override
   void onSubmitting() async {
-    debugPrint(email.value);
-    debugPrint(password.value);
+    // debugPrint(email.value);
+    // debugPrint(password.value);
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.value,

@@ -15,6 +15,14 @@ class GetAllPatients extends PatientEvent {
   List<Object> get props => [room];
 }
 
+class ChoosePatient extends PatientEvent {
+  final Patient chosenPatient;
+
+  const ChoosePatient({required this.chosenPatient});
+  @override
+  List<Object> get props => [chosenPatient];
+}
+
 class AddPatient extends PatientEvent {
   final Patient patient;
   const AddPatient({
@@ -23,6 +31,16 @@ class AddPatient extends PatientEvent {
 
   @override
   List<Object> get props => [patient];
+}
+
+class UpdatePatientProcedure extends PatientEvent {
+  final String procedureType;
+  const UpdatePatientProcedure({
+    required this.procedureType,
+  });
+
+  @override
+  List<Object> get props => [procedureType];
 }
 
 class RemovePatient extends PatientEvent {

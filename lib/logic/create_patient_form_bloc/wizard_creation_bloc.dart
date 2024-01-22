@@ -5,7 +5,6 @@ import '../../models/patient_model.dart';
 
 class WizardFormBloc extends FormBloc<String, String> {
   Patient patient = const Patient();
-  var room = 'unknown';
   final name = TextFieldBloc(
     validators: [FieldBlocValidators.required],
   );
@@ -37,7 +36,7 @@ class WizardFormBloc extends FormBloc<String, String> {
     validators: [FieldBlocValidators.required],
   );
 
-  WizardFormBloc({required this.room}) {
+  WizardFormBloc() {
     addFieldBlocs(
       step: 0,
       fieldBlocs: [name, id],

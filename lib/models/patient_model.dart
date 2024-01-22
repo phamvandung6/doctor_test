@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:doctor_test/utils/enums/enum.dart';
 import 'package:equatable/equatable.dart';
 
 class Patient extends Equatable {
@@ -10,6 +11,8 @@ class Patient extends Equatable {
   final String? phone;
   final String? gender;
   final Timestamp? birthday;
+  final ProcedureType? procedureType;
+  final String? currentProcedureId;
   // final String? room;
   const Patient({
     this.name = '',
@@ -20,7 +23,8 @@ class Patient extends Equatable {
     this.phone = '',
     this.gender = '',
     this.birthday,
-    // this.room = '',
+    this.procedureType = ProcedureType.unknown,
+    this.currentProcedureId = '',
   });
 
   Patient copyWith({
@@ -32,7 +36,8 @@ class Patient extends Equatable {
     String? phone,
     String? gender,
     Timestamp? birthday,
-    // String? room,
+    ProcedureType? procedureType,
+    String? currentProcedureId,
   }) {
     return Patient(
       name: name ?? this.name,
@@ -43,7 +48,8 @@ class Patient extends Equatable {
       phone: phone ?? this.phone,
       gender: gender ?? this.gender,
       birthday: birthday ?? this.birthday,
-      // room: room ?? this.room,
+      procedureType: procedureType ?? this.procedureType,
+      currentProcedureId: currentProcedureId ?? this.currentProcedureId,
     );
   }
 
@@ -77,7 +83,6 @@ class Patient extends Equatable {
   }
 
   @override
-  // TODO: implement props
   List<Object?> get props => [
         id,
         name,
@@ -86,5 +91,6 @@ class Patient extends Equatable {
         address,
         phone,
         birthday,
+        procedureType,
       ];
 }

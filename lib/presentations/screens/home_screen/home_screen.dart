@@ -43,11 +43,16 @@ class HomeScreen extends StatelessWidget {
                 create: (context) => LandingPageBloc(),
                 child: ElevatedButton(
                   onPressed: () {
-                    BlocProvider.of<LandingPageBloc>(context).add(
-                      TabChange(
-                        tabIndex: 1,
-                      ),
-                    );
+                    // BlocProvider.of<LandingPageBloc>(context).add(
+                    //   TabChange(
+                    //     tabIndex: 1,
+                    //   ),
+                    // );
+                    context.read<LandingPageBloc>().add(
+                          TabChange(
+                            tabIndex: 1,
+                          ),
+                        );
                   },
                   child: const Text('Bắt đầu'),
                 ),

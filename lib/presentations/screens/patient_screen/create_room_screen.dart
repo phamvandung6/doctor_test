@@ -9,6 +9,7 @@ class CreateRoomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var roomBloc = BlocProvider.of<RoomBloc>(context);
     return BlocProvider(
       create: (context) => CreateRoomFormBloc(),
       child: Builder(

@@ -6,6 +6,15 @@ abstract class RoomEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+class ChooseRoom extends RoomEvent {
+  final Room chosenRoom;
+  const ChooseRoom({
+    required this.chosenRoom,
+  });
+
+  @override
+  List<Object> get props => [chosenRoom];
+}
 
 class SearchRoom extends RoomEvent {
   final String search;

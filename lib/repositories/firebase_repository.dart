@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_test/models/patient_model.dart';
 import 'package:doctor_test/models/room_model.dart';
-import 'package:get_storage/get_storage.dart';
 
 class FirestoreRepository {
   // create room
@@ -21,7 +20,6 @@ class FirestoreRepository {
     try {
       final data =
           await FirebaseFirestore.instance.collection('rooms').doc(id).get();
-      print(data.data()!);
       return Room.fromMap(data.data()!);
     } catch (e) {
       throw Exception(e.toString());
@@ -36,10 +34,8 @@ class FirestoreRepository {
           .collection('rooms')
           .snapshots()
           .first;
-      print(data);
 
       for (var element in data.docs) {
-        print(element.data());
         roomList.add(Room.fromMap(element.data()));
       }
       return roomList;
@@ -91,18 +87,20 @@ class FirestoreRepository {
       }
       return patientsList;
     } catch (e) {
-      print(e.toString());
       throw Exception(e.toString());
     }
   }
 
   //update patients
-  static Future<void> updatePatient({Patient? patient}) async {
+  static Future<void> updatePatient(
+      {required Room room, required Patient patient}) async {
     try {
-      final data =
-          FirebaseFirestore.instance.collection(GetStorage().read('patients'));
-
-      data.doc(patient!.id).update(patient.toMap());
+      final data = FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(room.roomId)
+          .collection('patients')
+          .doc(patient.id);
+      data.update(patient.toMap());
     } catch (e) {
       throw Exception(e.toString());
     }

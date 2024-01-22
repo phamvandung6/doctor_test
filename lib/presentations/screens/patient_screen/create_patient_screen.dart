@@ -13,7 +13,7 @@ class CreatePatientScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => WizardFormBloc(room: room.roomId),
+      create: (context) => WizardFormBloc(),
       child: Builder(
         builder: (context) {
           final formBloc = BlocProvider.of<WizardFormBloc>(context);
