@@ -8,6 +8,7 @@ import '../../../../utils/enums/enum_to_string.dart';
 
 class MouthRegimenScreen extends StatefulWidget {
   const MouthRegimenScreen({Key? key}) : super(key: key);
+  @override
   State<MouthRegimenScreen> createState() => _MouthRegimenScreenState();
 }
 
@@ -73,11 +74,8 @@ class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
                 ),
               );
             } else {
-              return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: TimeCheck(isCheck: false, time: DateTime.now()),
-              );
+              return TimeCheck(
+                  time: DateTime.now().add(const Duration(minutes: 1)));
             }
           })
         ],
