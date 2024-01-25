@@ -1,8 +1,6 @@
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:doctor_test/presentations/screens/patient_home_page/patient_home_page.dart';
 import 'package:doctor_test/presentations/screens/patient_screen/create_room_screen.dart';
-import 'package:doctor_test/utils/loading_dialog.dart';
-// import 'package:doctor_test/utils/guid_gen.dart';
 import 'package:doctor_test/utils/reusable_widget.dart';
 import 'package:flutter/material.dart';
 

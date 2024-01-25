@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:doctor_test/logic/regimen_bloc/mouth_bloc/mouth_bloc.dart';
 import 'package:doctor_test/presentations/screens/list_regimen_screen/time_check.dart';
+import 'package:doctor_test/utils/reusable_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/enums/enum.dart';
@@ -13,6 +16,18 @@ class MouthRegimenScreen extends StatefulWidget {
 }
 
 class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Timer.periodic(const Duration(minutes: 2, seconds: 20), (timer) {
+    //   context.read<MouthBloc>().add(CheckingDone());
+    //   print('test');
+    //   if (context.read<MouthBloc>().state.regimenStatus == RegimenStatus.done) {
+    //     timer.cancel();
+    //   }
+    // });
+  }
+
   List<InsulinType> insulinType = InsulinType.values;
   @override
   Widget build(BuildContext context) {
@@ -21,62 +36,45 @@ class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
       child: Expanded(
           child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: const Text('Tạm ngưng các thuốc hạ đường huyết'),
-          ),
-          Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: const Text(
-                'Truyền glucose 10% 500ml pha truyền 5UI Actrapid hoặc Nutriflex pha truyền 9UI Actrapid'),
-          ),
+          textBox('Tạm ngưng các thuốc hạ đường huyết'),
+          textBox(
+              'Truyền glucose 10% 500ml pha truyền 5UI ${EnumToString.enumToString(InsulinType.actrapid)} hoặc Nutriflex pha truyền 9UI ${EnumToString.enumToString(InsulinType.actrapid)}'),
           BlocBuilder<MouthBloc, MouthState>(builder: (context, state) {
-            if (context.read<MouthBloc>().state.regimenStatus ==
-                RegimenStatus.done) {
-              return Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.black)),
-                child: const Text('Đạt mục tiêu'),
-              );
-            } else if (state.regimenStatus == RegimenStatus.givingInsulin) {
-              if (state.glucoseLevel > 8.3 && state.glucoseLevel <= 11.1) {
-                return Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: Text(
-                      'Truyền dung dịch ${EnumToString.enumToString(InsulinType.actrapid)} 2UI'),
-                );
-              } else {
-                return Container(
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black)),
-                  child: Text(
-                      'Truyền dung dịch ${EnumToString.enumToString(InsulinType.actrapid)} 4UI'),
-                );
-              }
-            } else if (state.regimenStatus == RegimenStatus.checkingGlucose) {
-              return Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black)),
-                child: TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Nhập đường huyết',
-                  ),
-                  keyboardType: TextInputType.number,
-                  onSubmitted: (value) {
-                    context
-                        .read<MouthBloc>()
-                        .add(CheckGlucose(glucoseLevel: double.parse(value)));
-                  },
-                ),
-              );
-            } else {
+            if (state.regimenStatus == RegimenStatus.checkingGlucose ||
+                state.regimenStatus == RegimenStatus.error) {
+              return inputBox('Nhập đường huyêt', (value) {
+                context
+                    .read<MouthBloc>()
+                    .add(CheckGlucose(glucoseLevel: double.parse(value)));
+              });
+            } else if (state.regimenStatus == RegimenStatus.waiting) {
               return TimeCheck(
                   time: DateTime.now().add(const Duration(minutes: 1)));
+            } else {
+              return textBox('Thành công chuyển qua hội chuẩn');
             }
+          }),
+          BlocBuilder<MouthBloc, MouthState>(builder: ((context, state) {
+            if (state.regimenStatus == RegimenStatus.waiting) {
+              if (state.glucoseLevel > 8.3 && state.glucoseLevel <= 11.1) {
+                return textBox(
+                    'Truyền dung dịch ${EnumToString.enumToString(InsulinType.actrapid)} 2UI');
+              } else if (state.glucoseLevel > 11.1) {
+                return textBox(
+                    'Truyền dung dịch ${EnumToString.enumToString(InsulinType.actrapid)} 4UI');
+              } else if (state.glucoseLevel >= 3.9 &&
+                  state.glucoseLevel <= 8.3) {
+                return textBox('Đạt mục tiêu lần ${state.doneList.length}');
+              } else {
+                return textBox('Đường huyết không hợp lệ vui lòng nhập lại');
+              }
+            } else {
+              return Container();
+            }
+          })),
+          BlocBuilder<MouthBloc, MouthState>(builder: (context, state) {
+            context.read<MouthBloc>().add(CheckingDone());
+            return Container();
           })
         ],
       )),

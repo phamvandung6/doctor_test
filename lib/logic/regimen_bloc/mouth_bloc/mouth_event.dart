@@ -26,3 +26,14 @@ class CheckingTime extends MouthEvent {
   @override
   List<Object> get props => [time];
 }
+
+class CheckingDone extends MouthEvent {}
+
+class AddingDone extends MouthEvent {
+  final bool done;
+  const AddingDone({
+    required this.done,
+  });
+  @override
+  List<Object> get props => [done];
+}

@@ -15,10 +15,26 @@ class TimeCheck extends StatefulWidget {
 }
 
 class _TimeCheck extends State<TimeCheck> {
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
-    startTimer();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (DateTime.now().hour == widget.time.hour &&
+          DateTime.now().minute == widget.time.minute &&
+          DateTime.now().second == widget.time.second) {
+        context.read<MouthBloc>().add(CheckingTime(time: widget.time));
+        timer.cancel();
+      }
+    });
+    // startTimer();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
   }
 
   void startTimer() {
@@ -34,13 +50,16 @@ class _TimeCheck extends State<TimeCheck> {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<MouthBloc>().add(CheckingTime(time: time));
     return Container(
       margin: const EdgeInsets.only(right: 8),
-      child: Row(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey),
+      ),
+      child: Column(
         children: [
           Text(
-            'Bạn phải đợi đến ${widget.time.hour}:${widget.time.minute}:${widget.time.second}',
+            'Kiểm tra lại lượng glucose sau ${widget.time.hour}:${widget.time.minute}:${widget.time.second} ngày ${widget.time.day}/${widget.time.month}/${widget.time.year}',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -48,8 +67,8 @@ class _TimeCheck extends State<TimeCheck> {
             ),
           ),
           const SizedBox(width: 4),
-          Icon(
-            Icons.check,
+          const Icon(
+            Icons.timer,
             color: Colors.grey,
           ),
         ],

@@ -65,6 +65,35 @@ class ReusableList extends StatelessWidget {
   }
 }
 
+Container inputBox(String text, Function(dynamic value)? onPressed) {
+  return Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.black)),
+    child: TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        labelText: text,
+      ),
+      keyboardType: TextInputType.number,
+      onSubmitted: onPressed,
+    ),
+  );
+}
+
+Container textBox(String text) {
+  return Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(color: Colors.grey),
+      // gradient: Gradient(colors: )
+    ),
+    child: Text(text),
+  );
+}
+
 Expanded listRoom(List<Room> rooms, BuildContext context) {
   return Expanded(
     child: ListView.builder(
