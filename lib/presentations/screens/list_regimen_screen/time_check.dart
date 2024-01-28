@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 
 class TimeCheck extends StatefulWidget {
   final DateTime time;
+  final Function(Timer timer) onDone;
   const TimeCheck({
     Key? key,
     required this.time,
+    required this.onDone,
   }) : super(key: key);
   @override
   State<TimeCheck> createState() => _TimeCheck();
@@ -19,14 +21,7 @@ class _TimeCheck extends State<TimeCheck> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (DateTime.now().hour == widget.time.hour &&
-          DateTime.now().minute == widget.time.minute &&
-          DateTime.now().second == widget.time.second) {
-        context.read<MouthBloc>().add(CheckingTime(time: widget.time));
-        timer.cancel();
-      }
-    });
+    _timer = Timer.periodic(const Duration(seconds: 1), widget.onDone);
     // startTimer();
   }
 

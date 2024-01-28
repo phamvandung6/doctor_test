@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:doctor_test/logic/export_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../../../utils/enums/enum.dart';
 part 'mouth_state.dart';
@@ -29,6 +30,13 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
       }
       doneList1.add(true);
       emit(state.copyWith(doneList: doneList1));
+    } else {
+      var doneList1 = <bool>[];
+      for (var i = 0; i < state.doneList.length; i++) {
+        doneList1.add(state.doneList[i]);
+      }
+      doneList1.add(false);
+      emit(state.copyWith(doneList: doneList1));
     }
   }
 
@@ -39,7 +47,6 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
     }
     doneList1.add(event.done);
     emit(state.copyWith(doneList: doneList1));
-    print(state.regimenStatus);
   }
 
   bool checkDoneList(List<bool> doneList) {
@@ -53,11 +60,14 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
   }
 
   bool checkFailList(List<bool> doneList) {
-    if (doneList.contains(true)) {
-      return true;
-    }
-    return false;
+    if (doneList.isEmpty) return false;
+    return doneList.last == false ? true : false;
   }
+  // Future<void> _onCheckingFail(CheckingFail event, Emitter<MouthState> emit) async {
+  //   Timer timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+
+  //   });
+  // }
 
   Future<void> _onCheckingTime(
       CheckingTime event, Emitter<MouthState> emit) async {
@@ -66,8 +76,18 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
 
   Future<void> _onCheckingDone(
       CheckingDone event, Emitter<MouthState> emit) async {
+    // Timer timer;
+    // Ticker ticker;
+    // ticker = Ticker((Duration duration) {
+
+    // });
+    // final time = RestartableTimer();
     if (checkDoneList(state.doneList)) {
       emit(state.copyWith(regimenStatus: RegimenStatus.done));
+    }
+    checkDoneList(state.doneList);
+    if (state.doneList.last == false) {
+      // timer.
     }
   }
 }

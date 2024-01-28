@@ -16,19 +16,8 @@ class MouthRegimenScreen extends StatefulWidget {
 }
 
 class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Timer.periodic(const Duration(minutes: 2, seconds: 20), (timer) {
-    //   context.read<MouthBloc>().add(CheckingDone());
-    //   print('test');
-    //   if (context.read<MouthBloc>().state.regimenStatus == RegimenStatus.done) {
-    //     timer.cancel();
-    //   }
-    // });
-  }
-
   List<InsulinType> insulinType = InsulinType.values;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,8 +37,17 @@ class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
                     .add(CheckGlucose(glucoseLevel: double.parse(value)));
               });
             } else if (state.regimenStatus == RegimenStatus.waiting) {
+              final time = DateTime.now().add(const Duration(minutes: 1));
               return TimeCheck(
-                  time: DateTime.now().add(const Duration(minutes: 1)));
+                  time: time,
+                  onDone: (timer) {
+                    if (DateTime.now().hour == time.hour &&
+                        DateTime.now().minute == time.minute &&
+                        DateTime.now().second == time.second) {
+                      context.read<MouthBloc>().add(CheckingTime(time: time));
+                      timer.cancel();
+                    }
+                  });
             } else {
               return textBox('Thành công chuyển qua hội chuẩn');
             }
@@ -73,7 +71,22 @@ class _MouthRegimenScreenState extends State<MouthRegimenScreen> {
             }
           })),
           BlocBuilder<MouthBloc, MouthState>(builder: (context, state) {
-            context.read<MouthBloc>().add(CheckingDone());
+            Timer? _timer;
+            if (state.regimenStatus == RegimenStatus.waiting) {
+              context.read<MouthBloc>().add(CheckingDone());
+              if (state.doneList.last == false) {
+                _timer = Timer.periodic(const Duration(minutes: 1, seconds: 20),
+                    (timer) {
+                  if (state.doneList.last == true) {
+                    timer.cancel();
+                    _timer = null;
+                  }
+                  print(DateTime.now());
+                });
+              }
+            } else {
+              _timer = null;
+            }
             return Container();
           })
         ],
