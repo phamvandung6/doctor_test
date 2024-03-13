@@ -71,6 +71,23 @@ class FirestoreRepository {
     }
   }
 
+  static Future<void> addRegimen({Patient? patient, Room? room}) async {
+    try {
+      Timestamp timestamp = Timestamp.fromDate(DateTime.now());
+      await FirebaseFirestore.instance
+          .collection('rooms')
+          .doc(room!.roomId)
+          .collection('patients')
+          .doc(patient!.id)
+          .collection('regimen')
+          .doc('treatment at ${DateTime.now()}')
+          .set({'time': timestamp, 'treatment': patient.procedureType});
+      // .add(room!.toMap());
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   //get all patients
   static Future<List<Patient>> getPatients(Room? room) async {
     List<Patient> patientsList = [];
@@ -100,6 +117,7 @@ class FirestoreRepository {
           .doc(room.roomId)
           .collection('patients')
           .doc(patient.id);
+      print(data.id);
       data.update(patient.toMap());
     } catch (e) {
       throw Exception(e.toString());

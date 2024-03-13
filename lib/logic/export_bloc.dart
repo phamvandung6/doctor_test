@@ -9,3 +9,6 @@ export 'package:doctor_test/logic/auth_bloc/forgot_password_form_bloc.dart';
 export 'package:doctor_test/logic/landing_page_bloc/landing_page_bloc.dart';
 export 'package:doctor_test/logic/room_bloc/room_bloc.dart';
 export 'package:doctor_test/logic/patient_bloc/patient_bloc.dart';
+export 'package:doctor_test/logic/regimen_bloc/mouth_bloc/mouth_bloc.dart';
+export 'package:doctor_test/logic/regimen_bloc/time_bloc/time_bloc.dart';
+export 'package:doctor_test/logic/regimen_bloc/time_bloc/time_check_cubit.dart';

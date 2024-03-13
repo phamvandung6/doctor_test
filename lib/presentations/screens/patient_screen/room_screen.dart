@@ -19,7 +19,6 @@ class _RoomScreenState extends State<RoomScreen> {
     PatientBloc patientBloc = BlocProvider.of<PatientBloc>(context);
     RoomBloc roomBloc = BlocProvider.of<RoomBloc>(context);
     return MultiBlocProvider(
-      // lazy: false,
       providers: [
         BlocProvider<RoomBloc>(
           create: (context) => RoomBloc(),
@@ -83,9 +82,7 @@ class _RoomScreenState extends State<RoomScreen> {
             ),
             BlocBuilder<RoomBloc, RoomState>(builder: (context, state) {
               context.read<RoomBloc>().add(GetAllRooms());
-              // LoadingDialog.show(context);
               if (state.chosenRoom == const Room()) {
-                // LoadingDialog.hide(context);
                 return Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),

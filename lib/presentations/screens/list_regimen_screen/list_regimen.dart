@@ -4,18 +4,15 @@ import 'package:doctor_test/presentations/screens/list_regimen_screen/mouth_regi
 import 'package:doctor_test/utils/enums/enum.dart';
 import 'package:flutter/material.dart';
 
-import '../../../models/patient_model.dart';
 import '../../../models/room_model.dart';
 
 class ListRegimen extends StatelessWidget {
   const ListRegimen({
     super.key,
     required this.room,
-    required this.patient,
   });
 
   final Room room;
-  final Patient patient;
   @override
   Widget build(BuildContext context) {
     return Padding(

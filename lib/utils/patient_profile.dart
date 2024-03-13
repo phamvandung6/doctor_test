@@ -54,6 +54,9 @@ class PatientProfile extends StatelessWidget {
                   Text(
                     'Địa chỉ: ${context.read<PatientBloc>().state.chosenPatient.address}',
                   ),
+                  Text(
+                    'Loại phác đồ: ${context.read<PatientBloc>().state.chosenPatient.procedureType}',
+                  ),
                 ],
               )
             ],

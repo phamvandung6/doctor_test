@@ -37,7 +37,6 @@ class Patient extends Equatable {
     String? gender,
     Timestamp? birthday,
     ProcedureType? procedureType,
-    String? currentProcedureId,
   }) {
     return Patient(
       name: name ?? this.name,
@@ -49,7 +48,6 @@ class Patient extends Equatable {
       gender: gender ?? this.gender,
       birthday: birthday ?? this.birthday,
       procedureType: procedureType ?? this.procedureType,
-      currentProcedureId: currentProcedureId ?? this.currentProcedureId,
     );
   }
 
@@ -63,7 +61,7 @@ class Patient extends Equatable {
       'phone': phone,
       'gender': gender,
       'birthday': birthday,
-      // 'room': room,
+      'procedureType': procedureType.toString().split('.').last,
     };
   }
 
@@ -77,8 +75,9 @@ class Patient extends Equatable {
       phone: map['phone'] as String?,
       birthday: map['birthday'] as Timestamp?,
       gender: map['gender'] as String?,
+      procedureType: ProcedureType.values.firstWhere(
+          (e) => e.toString().split('.').last == map['ProcedureType']),
       // room: map['room'] as String,
-      // fbId: map['fbId'] as String,
     );
   }
 

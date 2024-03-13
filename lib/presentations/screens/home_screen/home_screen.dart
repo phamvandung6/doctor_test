@@ -1,5 +1,4 @@
 import 'package:doctor_test/logic/export_bloc.dart';
-import 'package:doctor_test/logic/landing_page_bloc/landing_page_bloc.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -39,15 +38,14 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
-              BlocProvider(
-                create: (context) => LandingPageBloc(),
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider<LandingPageBloc>(
+                    create: (context) => LandingPageBloc(),
+                  ),
+                ],
                 child: ElevatedButton(
                   onPressed: () {
-                    // BlocProvider.of<LandingPageBloc>(context).add(
-                    //   TabChange(
-                    //     tabIndex: 1,
-                    //   ),
-                    // );
                     context.read<LandingPageBloc>().add(
                           TabChange(
                             tabIndex: 1,

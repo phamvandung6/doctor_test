@@ -20,8 +20,11 @@ class _CreateRegimen2State extends State<CreateRegimen2> {
         title: const Text('Tạo phác đồ mới'),
       ),
       body: Center(
-        child: BlocProvider<PatientBloc>.value(
-          value: BlocProvider.of<PatientBloc>(context),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider.value(value: BlocProvider.of<PatientBloc>(context)),
+            BlocProvider.value(value: BlocProvider.of<RoomBloc>(context)),
+          ],
           child: Column(
             children: [
               DropdownButton<ProcedureType>(
@@ -42,8 +45,8 @@ class _CreateRegimen2State extends State<CreateRegimen2> {
               ElevatedButton(
                   onPressed: () {
                     context.read<PatientBloc>().add(UpdatePatientProcedure(
-                        procedureType:
-                            EnumToString.enumToString(dropdownValue)));
+                        procedureType: EnumToString.enumToString(dropdownValue),
+                        room: context.read<RoomBloc>().state.chosenRoom));
                     Navigator.pop(context);
                   },
                   child: const Text('Tạo phác đồ mới'))

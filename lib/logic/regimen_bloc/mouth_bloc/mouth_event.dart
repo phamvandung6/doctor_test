@@ -7,6 +7,18 @@ abstract class MouthEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AddRoomPatient extends MouthEvent {
+  final Room room;
+  final Patient patient;
+  const AddRoomPatient({
+    required this.room,
+    required this.patient,
+  });
+
+  @override
+  List<Object> get props => [room, patient];
+}
+
 class CheckGlucose extends MouthEvent {
   final double glucoseLevel;
   const CheckGlucose({
@@ -27,7 +39,14 @@ class CheckingTime extends MouthEvent {
   List<Object> get props => [time];
 }
 
-class CheckingDone extends MouthEvent {}
+class CheckingDone extends MouthEvent {
+  final DateTime time;
+  const CheckingDone({
+    required this.time,
+  });
+  @override
+  List<Object> get props => [time];
+}
 
 class AddingDone extends MouthEvent {
   final bool done;
@@ -37,3 +56,5 @@ class AddingDone extends MouthEvent {
   @override
   List<Object> get props => [done];
 }
+
+class GuideMixing extends MouthEvent {}

@@ -53,6 +53,7 @@ class PatientBloc extends Bloc<PatientEvent, PatientState> {
     ProcedureType procedureType = ProcedureType.values
         .firstWhere((e) => e.toString().split('.').last == event.procedureType);
     Patient temp = state.chosenPatient.copyWith(procedureType: procedureType);
+    await FirestoreRepository.updatePatient(patient: temp, room: event.room);
     emit(PatientState(
       chosenPatient: temp,
     ));

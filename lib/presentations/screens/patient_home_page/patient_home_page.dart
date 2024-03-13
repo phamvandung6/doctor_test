@@ -11,15 +11,19 @@ class PatientHomePage extends StatefulWidget {
   State<PatientHomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<PatientHomePage> {
+class _HomePageState extends State<PatientHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
   void dispose() {
     super.dispose();
+    _tabController.dispose();
   }
 
   @override
@@ -38,7 +42,12 @@ class _HomePageState extends State<PatientHomePage> {
             appBar: AppBar(
               title: const Text('Trang chủ bệnh nhân'),
               bottom: TabBar(
-                onTap: (selectedIndex) {},
+                controller: _tabController,
+                onTap: (selectedIndex) {
+                  setState(() {
+                    _tabController.index = selectedIndex;
+                  });
+                },
                 tabs: const [
                   Tab(
                     child: Text(
@@ -62,15 +71,20 @@ class _HomePageState extends State<PatientHomePage> {
               ),
             ),
             body: TabBarView(
+              controller: _tabController,
               children: [
                 const Treatment(),
                 ListRegimen(
-                    room: context.read<RoomBloc>().state.chosenRoom,
-                    patient: context.read<PatientBloc>().state.chosenPatient),
+                  room: context.read<RoomBloc>().state.chosenRoom,
+                ),
                 PatientProfile(widget: widget)
               ],
             ),
           ),
         ));
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
